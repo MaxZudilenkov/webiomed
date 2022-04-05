@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
+from mainapp.forms import AddPatientForm
 from mainapp.models import Patient
 
 
@@ -20,3 +21,14 @@ class PatientDetailView(ListView):
         context = super().get_context_data(**kwargs)
         context['patient'] = Patient.objects.get(pk=self.kwargs['pk'])
         return context
+
+
+def add_patient(request):
+    if request.method == 'POST':
+        form = AddPatientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('patient_list_view')
+    form = AddPatientForm()
+    context = {'form': form}
+    return render(request, 'mainapp/add_patient.html', context)
