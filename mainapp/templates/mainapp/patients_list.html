@@ -6,6 +6,8 @@
 
     {% for patient in patients %}
 
-        <p>{{ patient }}</p>
+        <p>
+            <a href="{% url 'patient_detail'  pk=patient.pk %}"> {{ patient }} </a>
+        </p>
 
     {% endfor %}
