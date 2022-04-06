@@ -87,3 +87,10 @@ class MedicalDocumentListView(ListView):
 
     def get_queryset(self):
         return MedicalDocument.objects.all()
+
+    def get_context_data(self, **kwargs):
+        my_filter = TreatmentCaseFilter(self.request.GET, queryset=MedicalDocument.objects.all())
+        context = super().get_context_data(**kwargs)
+        context['my_filter'] = my_filter
+        context['documents'] = my_filter.qs
+        return context
