@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
 from mainapp.filters import TreatmentCaseFilter
-from mainapp.forms import AddPatientForm
+from mainapp.forms import AddPatientForm, AddTreatmentCaseForm
 from mainapp.models import Patient, TreatmentCase
 
 
 class PatientListView(ListView):
+    # Класс для отображения списка пациентов
     template_name = 'mainapp/patients_list.html'
     context_object_name = 'patients'
 
@@ -15,6 +16,7 @@ class PatientListView(ListView):
 
 
 class PatientDetailView(ListView):
+    # Класс для отображения конкртеного пацииента
     model = Patient
     template_name = 'mainapp/patient_detail.html'
 
@@ -25,6 +27,7 @@ class PatientDetailView(ListView):
 
 
 def add_patient(request):
+    # Метод для добавления пацииента
     if request.method == 'POST':
         form = AddPatientForm(request.POST)
         if form.is_valid():
@@ -35,7 +38,20 @@ def add_patient(request):
     return render(request, 'mainapp/add_patient.html', context)
 
 
+def add_case(request):
+    # Класс для добавления случая лечения
+    if request.method == 'POST':
+        form = AddTreatmentCaseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('case_list_view')
+    form = AddTreatmentCaseForm()
+    context = {'form': form}
+    return render(request, 'mainapp/add_case.html', context)
+
+
 class TreatmentCaseListView(ListView):
+    # Класс для отображения списка случаев лечения
     template_name = 'mainapp/cases_list.html'
     context_object_name = 'cases'
 
@@ -51,5 +67,6 @@ class TreatmentCaseListView(ListView):
 
 
 class TreatmentCaseDetailView(ListView):
+    # Класс для отображения конкретного случая лечения
     model = Patient
     template_name = 'mainapp/case_detail.html'
