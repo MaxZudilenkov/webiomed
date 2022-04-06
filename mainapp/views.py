@@ -48,3 +48,8 @@ class TreatmentCaseListView(ListView):
         context['my_filter'] = my_filter
         context['cases'] = my_filter.qs
         return context
+
+
+class TreatmentCaseDetailView(ListView):
+    model = Patient
+    template_name = 'mainapp/case_detail.html'
