@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
+from mainapp.filters import TreatmentCaseFilter
 from mainapp.forms import AddPatientForm
 from mainapp.models import Patient, TreatmentCase
 
@@ -40,3 +41,10 @@ class TreatmentCaseListView(ListView):
 
     def get_queryset(self):
         return TreatmentCase.objects.all()
+
+    def get_context_data(self, **kwargs):
+        my_filter = TreatmentCaseFilter(self.request.GET, queryset=TreatmentCase.objects.all())
+        context = super().get_context_data(**kwargs)
+        context['my_filter'] = my_filter
+        context['cases'] = my_filter.qs
+        return context
