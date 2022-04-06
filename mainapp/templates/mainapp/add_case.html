@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'base.html' %}
+
+
+{% block title %}
+
     <title>Добавление случая лечения</title>
-</head>
-<body>
+
+{% endblock %}
+
+
+{% block content %}
 
 <form method="post">
     {% csrf_token %}
@@ -15,5 +19,5 @@
 
 </form>
 
-</body>
-</html>
+{% endblock %}
+
