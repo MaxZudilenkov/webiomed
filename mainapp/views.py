@@ -78,3 +78,12 @@ class TreatmentCaseDetailView(ListView):
         context = super().get_context_data(**kwargs)
         context['documents'] = MedicalDocument.objects.filter(case=current_case)
         return context
+
+
+class MedicalDocumentListView(ListView):
+    # Класс для отображения списка документов
+    template_name = 'mainapp/documents_list.html'
+    context_object_name = 'documents'
+
+    def get_queryset(self):
+        return MedicalDocument.objects.all()
