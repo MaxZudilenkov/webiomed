@@ -18,10 +18,21 @@
 
      <form method="get">
 
-        {{ my_filter.form }}
+        {{ my_filter_patient.form }}
 
         <div>
-            <button type="submit">Отфильтровать по пациенту</button>
+            <button type="submit" name = 'filter_by_patient'>Отфильтровать по пациенту</button>
+        </div>
+
+    </form>
+
+
+     <form method="get">
+
+        {{ my_filter_case.form }}
+
+        <div>
+            <button type="submit" name = 'filter_by_case'>Отфильтровать по случаю лечения</button>
         </div>
 
     </form>

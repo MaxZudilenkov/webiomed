@@ -2,7 +2,7 @@ from django.http import request
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
-from mainapp.filters import TreatmentCaseFilter
+from mainapp.filters import TreatmentCaseFilter, MedicalDocumentFilter
 from mainapp.forms import AddPatientForm, AddTreatmentCaseForm
 from mainapp.models import Patient, TreatmentCase, MedicalDocument
 
@@ -89,8 +89,13 @@ class MedicalDocumentListView(ListView):
         return MedicalDocument.objects.all()
 
     def get_context_data(self, **kwargs):
-        my_filter = TreatmentCaseFilter(self.request.GET, queryset=MedicalDocument.objects.all())
+        my_filter_patient = TreatmentCaseFilter(self.request.GET, queryset=MedicalDocument.objects.all())
+        my_filter_case = MedicalDocumentFilter(self.request.GET, queryset=MedicalDocument.objects.all())
         context = super().get_context_data(**kwargs)
-        context['my_filter'] = my_filter
-        context['documents'] = my_filter.qs
+        context['my_filter_patient'] = my_filter_patient
+        context['my_filter_case'] = my_filter_case
+        if 'filter_by_case' in self.request.GET:
+            context['documents'] = my_filter_case.qs
+        if 'filter_by_patient' in self.request.GET:
+            context['documents'] = my_filter_patient.qs
         return context

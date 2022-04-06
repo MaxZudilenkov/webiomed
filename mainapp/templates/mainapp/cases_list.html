@@ -11,7 +11,7 @@
     {% for case in cases %}
 
         <p>
-            <a href="{% url 'case_detail'  pk=case.pk %}"> {{ case }} </a>
+            <a href="{% url 'case_detail'  pk=case.pk %}"> {{ case }} </a> {{ case.start_date }}
         </p>
 
     {% endfor %}

@@ -1,6 +1,6 @@
 import django_filters
 
-from mainapp.models import TreatmentCase
+from mainapp.models import TreatmentCase, MedicalDocument
 
 
 class TreatmentCaseFilter(django_filters.FilterSet):
@@ -8,4 +8,7 @@ class TreatmentCaseFilter(django_filters.FilterSet):
         model = TreatmentCase
         fields = ['patient']
 
-
+class MedicalDocumentFilter(django_filters.FilterSet):
+    class Meta:
+        model = MedicalDocument
+        fields = ['case']
