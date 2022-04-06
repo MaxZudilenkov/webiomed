@@ -99,3 +99,16 @@ class MedicalDocumentListView(ListView):
         if 'filter_by_patient' in self.request.GET:
             context['documents'] = my_filter_patient.qs
         return context
+
+
+class MedicalDocumentDetailView(ListView):
+    # Класс для отображения конкретного документа
+    model = Patient
+    template_name = 'mainapp/case_detail.html'
+
+    def get_context_data(self, **kwargs):
+        current_case = int(self.request.get_full_path().split('/')[2])
+        print(current_case)
+        context = super().get_context_data(**kwargs)
+        context['documents'] = MedicalDocument.objects.filter(case=current_case)
+        return context
