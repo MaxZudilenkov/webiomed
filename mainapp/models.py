@@ -57,7 +57,7 @@ class MedicalDocument(models.Model):
 class DocumentBody(models.Model):
     # Класс тела документа
     document = models.OneToOneField(MedicalDocument, verbose_name="Привязка к документу", on_delete=models.CASCADE)
-    filling = models.JSONField(verbose_name="Наполнение документа")
+    filling = models.TextField(verbose_name="Наполнение документа")
 
     class Meta:
         verbose_name = "Тело документа"
@@ -70,7 +70,7 @@ class DocumentBody(models.Model):
 class RequestLog(models.Model):
     # Класс лога запросов
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время логгирования")
-    request_filling = models.JSONField(verbose_name="Наполнение ответа")
+    request_filling = models.TextField(verbose_name="Наполнение ответа")
 
     class Meta:
         verbose_name = "Лог запросов"
