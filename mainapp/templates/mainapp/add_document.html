@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    <title>Добавление документа</title>
+
+{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ document_form.as_p }}
+    {{ body_form.as_p }}
+
+    <div>
+        <button type="submit">Добавить документ</button>
+    </div>
+
+</form>
+
+{% endblock %}

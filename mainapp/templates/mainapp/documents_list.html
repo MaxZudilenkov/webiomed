@@ -11,7 +11,7 @@
  {% for document in documents %}
 
         <p>
-             {{ document }}
+             <a href="{% url 'document_detail'  pk=document.pk %}"> {{ document }} </a>
         </p>
 
  {% endfor %}

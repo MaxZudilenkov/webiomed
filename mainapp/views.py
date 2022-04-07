@@ -1,10 +1,11 @@
+import form as form
 from django.http import request
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from mainapp.filters import TreatmentCaseFilter, MedicalDocumentFilter
-from mainapp.forms import AddPatientForm, AddTreatmentCaseForm
-from mainapp.models import Patient, TreatmentCase, MedicalDocument
+from mainapp.forms import AddPatientForm, AddTreatmentCaseForm, AddMedicalDocumentForm, AddDocumentBodyForm
+from mainapp.models import Patient, TreatmentCase, MedicalDocument, DocumentBody
 
 
 class PatientListView(ListView):
@@ -16,7 +17,7 @@ class PatientListView(ListView):
         return Patient.objects.all()
 
 
-class PatientDetailView(ListView):
+class PatientDetailView(DetailView):
     # Класс для отображения конкртеного пацииента
     model = Patient
     template_name = 'mainapp/patient_detail.html'
@@ -51,6 +52,24 @@ def add_case(request):
     return render(request, 'mainapp/add_case.html', context)
 
 
+def add_document(request):
+    # Класс для добавления документа и тела документа
+    if request.method == 'POST':
+        document_form = AddMedicalDocumentForm(request.POST)
+        body_form = AddDocumentBodyForm(request.POST)
+        filling = request.POST.get('filling')
+        if document_form.is_valid():
+            model_instance = document_form.save(commit=False)
+            mn_instance = model_instance
+            mn_instance.save()
+            DocumentBody.objects.create(document=MedicalDocument.objects.last(), filling=filling)
+    else:
+        document_form = AddMedicalDocumentForm()
+        body_form = AddDocumentBodyForm()
+    context = {'document_form': document_form, 'body_form': body_form}
+    return render(request, 'mainapp/add_document.html', context)
+
+
 class TreatmentCaseListView(ListView):
     # Класс для отображения списка случаев лечения
     template_name = 'mainapp/cases_list.html'
@@ -74,7 +93,6 @@ class TreatmentCaseDetailView(ListView):
 
     def get_context_data(self, **kwargs):
         current_case = int(self.request.get_full_path().split('/')[2])
-        print(current_case)
         context = super().get_context_data(**kwargs)
         context['documents'] = MedicalDocument.objects.filter(case=current_case)
         return context
@@ -101,14 +119,18 @@ class MedicalDocumentListView(ListView):
         return context
 
 
-class MedicalDocumentDetailView(ListView):
+class DocumentDetailView(ListView):
     # Класс для отображения конкретного документа
-    model = Patient
-    template_name = 'mainapp/case_detail.html'
+    model = DocumentBody
+    template_name = 'mainapp/document_detail.html'
 
     def get_context_data(self, **kwargs):
-        current_case = int(self.request.get_full_path().split('/')[2])
-        print(current_case)
+        current_document = int(self.request.get_full_path().split('/')[2])
+        print(current_document)
         context = super().get_context_data(**kwargs)
-        context['documents'] = MedicalDocument.objects.filter(case=current_case)
+        try:
+            DocumentBody.objects.get(document=current_document)
+            context['bodies'] = DocumentBody.objects.get(document=current_document)
+        except DocumentBody.DoesNotExist:
+            context['bodies'] = ''
         return context

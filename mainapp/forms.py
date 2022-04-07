@@ -1,6 +1,6 @@
 from django import forms
 
-from mainapp.models import Patient, TreatmentCase
+from mainapp.models import Patient, TreatmentCase, MedicalDocument, DocumentBody
 
 
 class AddPatientForm(forms.ModelForm):
@@ -22,3 +22,17 @@ class AddTreatmentCaseForm(forms.ModelForm):
             'start_date': forms.SelectDateWidget(years=range(2010, 2022)),
             'end_date': forms.SelectDateWidget(years=range(2010, 2022)),
         }
+
+
+class AddMedicalDocumentForm(forms.ModelForm):
+    # Форма для добавления документа
+    class Meta:
+        model = MedicalDocument
+        fields = ('patient', 'case', 'title', 'document_date')
+
+
+class AddDocumentBodyForm(forms.ModelForm):
+    # Форма для добавления тела документа
+    class Meta:
+        model = DocumentBody
+        fields = ('filling',)
