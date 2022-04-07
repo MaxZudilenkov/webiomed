@@ -28,7 +28,7 @@ class AddMedicalDocumentForm(forms.ModelForm):
     # Форма для добавления документа
     class Meta:
         model = MedicalDocument
-        fields = ('patient', 'case', 'title', 'document_date')
+        fields = ('patient', 'case', 'title',)
 
 
 class AddDocumentBodyForm(forms.ModelForm):

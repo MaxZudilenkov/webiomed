@@ -44,7 +44,7 @@ class MedicalDocument(models.Model):
     case = models.ForeignKey(TreatmentCase, on_delete=models.CASCADE, related_name="document_case", null=True,
                              blank=True)
     title = models.CharField(verbose_name="Заголовок", max_length=200)
-    document_date = models.DateField(verbose_name="Дата документа")
+    document_date = models.DateField(verbose_name="Дата документа",auto_now_add=True)
 
     class Meta:
         verbose_name = "Медицинский документ"
