@@ -25,7 +25,7 @@ async def get_posts_and_photos(request):
 
 
 app = web.Application()
-app.add_routes([web.get('/photos', get_photos)])
-app.add_routes([web.get('/posts', get_posts)])
-app.add_routes([web.get('/posts_and_photos', get_posts_and_photos)])
+app.add_routes([web.get('/api/photos', get_photos)])
+app.add_routes([web.get('/api/posts', get_posts)])
+app.add_routes([web.get('/api/posts_and_photos', get_posts_and_photos)])
 web.run_app(app)

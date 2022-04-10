@@ -43,8 +43,6 @@ def add_patient(request):
 
 def add_case(request):
     # Класс для добавления случая лечения
-    r = requests.get('https://api.github.com/events')
-    print(r)
     if request.method == 'POST':
         form = AddTreatmentCaseForm(request.POST)
         if form.is_valid():
