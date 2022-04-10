@@ -18,10 +18,16 @@ async def get_posts(request):
 
 async def get_posts_and_photos(request):
     # Метод для вывода в шаблон объединенных данных
-    posts = open('json_posts.json')
-    photos = open('json_photos.json')
-    file_content = posts.read(), photos.read()
-    return web.Response(text=str(file_content))
+    f1data = f2data = ""
+    with open('json_posts.json') as f1:
+        f1data = f1.read()
+    with open('json_photos.json') as f2:
+        f2data = f2.read()
+    f1data += ", "
+    f1data += f2data
+    f3 = '(' + f1data + ')'
+
+    return web.Response(text=str(f3))
 
 
 app = web.Application()

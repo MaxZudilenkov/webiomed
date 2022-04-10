@@ -1,3 +1,6 @@
+import json
+from datetime import datetime
+
 import form as form
 import requests
 from django.http import request
@@ -6,7 +9,7 @@ from django.views.generic import ListView, DetailView
 
 from mainapp.filters import TreatmentCaseFilter, MedicalDocumentFilter
 from mainapp.forms import AddPatientForm, AddTreatmentCaseForm, AddMedicalDocumentForm, AddDocumentBodyForm
-from mainapp.models import Patient, TreatmentCase, MedicalDocument, DocumentBody
+from mainapp.models import Patient, TreatmentCase, MedicalDocument, DocumentBody, RequestLog
 
 
 class PatientListView(ListView):
@@ -135,3 +138,19 @@ class DocumentDetailView(ListView):
         except DocumentBody.DoesNotExist:
             context['bodies'] = ''
         return context
+
+
+def get_json_from_aiohttp_server(request):
+    # Метод для сохранения логов запросов
+    req = requests.get('http://127.0.0.1:8080/api/posts_and_photos')
+    content = req.text
+    if RequestLog.objects.last() is None:
+        RequestLog.objects.create(request_filling=content)
+    if RequestLog.objects.last().request_filling == content:
+        last_log = RequestLog.objects.last()
+        last_log.timestamp = datetime.now()
+        last_log.save()
+    else:
+        RequestLog.objects.create(request_filling=content)
+    context = {'logs': RequestLog.objects.all()}
+    return render(request, 'mainapp/request_to_aiohttp.html', context)

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    <title>Запрос к второму микросервису</title>
+
+{% endblock %}
+
+{% block content %}
+
+    Логирование запросов:
+
+    {% for log in logs %}
+
+        <p>
+            {{ log }}
+
+        </p>
+
+    {% endfor %}
+
+{% endblock %}
+

@@ -1,7 +1,8 @@
 from django.urls import path
 
 from mainapp.views import PatientListView, PatientDetailView, add_patient, TreatmentCaseListView, \
-    TreatmentCaseDetailView, add_case, MedicalDocumentListView, DocumentDetailView, add_document
+    TreatmentCaseDetailView, add_case, MedicalDocumentListView, DocumentDetailView, add_document, \
+    get_json_from_aiohttp_server
 
 urlpatterns = [
     path('patients/', PatientListView.as_view(), name="patient_list_view"),
@@ -13,4 +14,5 @@ urlpatterns = [
     path('add_patient/', add_patient, name="add_patient"),
     path('add_case/', add_case, name="add_case"),
     path('add_document/', add_document, name="add_document"),
+    path('request_aiohttp/', get_json_from_aiohttp_server, name="get_json_from_aiohttp_server"),
 ]

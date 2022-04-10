@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.template.defaultfilters import truncatechars
 
 from mainapp.models import Patient, TreatmentCase, MedicalDocument, DocumentBody, RequestLog
 
@@ -20,7 +21,7 @@ class DocumentBodyAdmin(admin.ModelAdmin):
 
 
 class RequestLogAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in RequestLog._meta.fields]
+    list_display = ['timestamp']
 
 
 admin.site.register(Patient, PatientAdmin)

@@ -20,7 +20,7 @@ async def create_json(url, file):
 
 async def routine():
     while True:
-        time.sleep(2)
+        time.sleep(3)
         await create_json('http://jsonplaceholder.typicode.com/photos', 'json_photos.json')
         await create_json('http://jsonplaceholder.typicode.com/posts', 'json_posts.json')
 
