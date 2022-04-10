@@ -1,4 +1,5 @@
 import form as form
+import requests
 from django.http import request
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
@@ -42,6 +43,8 @@ def add_patient(request):
 
 def add_case(request):
     # Класс для добавления случая лечения
+    r = requests.get('https://api.github.com/events')
+    print(r)
     if request.method == 'POST':
         form = AddTreatmentCaseForm(request.POST)
         if form.is_valid():
@@ -63,6 +66,7 @@ def add_document(request):
             mn_instance = model_instance
             mn_instance.save()
             DocumentBody.objects.create(document=MedicalDocument.objects.last(), filling=filling)
+            return redirect('document_list_view')
     else:
         document_form = AddMedicalDocumentForm()
         body_form = AddDocumentBodyForm()
@@ -126,7 +130,6 @@ class DocumentDetailView(ListView):
 
     def get_context_data(self, **kwargs):
         current_document = int(self.request.get_full_path().split('/')[2])
-        print(current_document)
         context = super().get_context_data(**kwargs)
         try:
             DocumentBody.objects.get(document=current_document)
