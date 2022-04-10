@@ -5,7 +5,7 @@ from mainapp.views import PatientListView, PatientDetailView, add_patient, Treat
     get_json_from_aiohttp_server
 
 urlpatterns = [
-    path('patients/', PatientListView.as_view(), name="patient_list_view"),
+    path('', PatientListView.as_view(), name="patient_list_view"),
     path('cases/', TreatmentCaseListView.as_view(), name="case_list_view"),
     path('documents/', MedicalDocumentListView.as_view(), name="document_list_view"),
     path('patient/<int:pk>', PatientDetailView.as_view(), name="patient_detail"),
