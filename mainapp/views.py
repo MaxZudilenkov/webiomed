@@ -148,7 +148,7 @@ def get_json_from_aiohttp_server(request):
         RequestLog.objects.create(request_filling=content)
     if RequestLog.objects.last().request_filling == content:
         last_log = RequestLog.objects.last()
-        last_log.timestamp = datetime.now()
+        last_log.timestamp = datetime.utcnow()
         last_log.save()
     else:
         RequestLog.objects.create(request_filling=content)
