@@ -16,7 +16,16 @@ async def get_posts(request):
     file_content = f.read()
     return web.Response(text=str(file_content))
 
+async def get_posts_and_photos(request):
+    # Метод для вывода в шаблон объединенных данных
+    posts = open('json_posts.json')
+    photos = open('json_photos.json')
+    file_content = posts.read(), photos.read()
+    return web.Response(text=str(file_content))
+
+
 app = web.Application()
 app.add_routes([web.get('/photos', get_photos)])
 app.add_routes([web.get('/posts', get_posts)])
+app.add_routes([web.get('/posts_and_photos', get_posts_and_photos)])
 web.run_app(app)
