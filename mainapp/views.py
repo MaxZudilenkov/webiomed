@@ -142,7 +142,7 @@ class DocumentDetailView(ListView):
 
 def get_json_from_aiohttp_server(request):
     # Метод для сохранения логов запросов
-    req = requests.get('http://127.0.0.1:8080/api/posts_and_photos')
+    req = requests.get('http://main:8080/api/posts_and_photos')
     content = req.text
     if RequestLog.objects.last() is None:
         RequestLog.objects.create(request_filling=content)
