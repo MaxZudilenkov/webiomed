@@ -12,10 +12,11 @@
 
     <form method="post">
     {% csrf_token %}
+    {{ form.request_time.label }}
+    {{ form.request_time }}
 
-    {{ form.as_p }}
 
-<div> <button type="submit">Изменить периодичность запросов</button></div>
+<div> <button type="submit">Изменить периодичность запроса</button></div>
 
 
 {% endblock %}
