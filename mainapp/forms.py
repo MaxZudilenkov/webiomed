@@ -40,4 +40,4 @@ class AddDocumentBodyForm(forms.ModelForm):
 
 class RequestTimeForm(forms.Form):
     # Форма для ввода периодичности запроса
-    request_time = forms.FloatField(min_value=0.1, max_value=9999, label="Введите периодичность запроса в секундах")
+    request_time = forms.IntegerField(min_value=10, max_value=9999, label="Введите периодичность запроса в секундах")
