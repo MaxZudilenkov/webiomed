@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+
+    <title>Периодинчость запросов</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+<div> <button type="submit">Изменить периодичность запросов</button></div>
+
+
+{% endblock %}
+

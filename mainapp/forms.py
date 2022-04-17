@@ -36,3 +36,6 @@ class AddDocumentBodyForm(forms.ModelForm):
     class Meta:
         model = DocumentBody
         fields = ('filling',)
+
+class RequestTimeForm(forms.Form):
+    request_time = forms.IntegerField(min_value=1, max_value=9999)

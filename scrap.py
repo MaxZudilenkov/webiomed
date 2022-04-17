@@ -18,9 +18,15 @@ async def create_json(url, file):
                 json.dump(json_data, outfile)
 
 
+def server_time():
+    read_file = open("server_time", "r")
+    request_time = int(read_file.read())
+    return request_time
+
+
 async def routine():
     while True:
-        time.sleep(3)
+        time.sleep(server_time())
         await create_json('http://jsonplaceholder.typicode.com/photos', 'json_photos.json')
         await create_json('http://jsonplaceholder.typicode.com/posts', 'json_posts.json')
 

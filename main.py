@@ -10,11 +10,13 @@ async def get_photos(request):
     file_content = f.read()
     return web.Response(text=str(file_content))
 
+
 async def get_posts(request):
     # Метод для вывода постов в шаблон
     f = open('json_posts.json')
     file_content = f.read()
     return web.Response(text=str(file_content))
+
 
 async def get_posts_and_photos(request):
     # Метод для вывода в шаблон объединенных данных

@@ -8,7 +8,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 
 from mainapp.filters import TreatmentCaseFilter, MedicalDocumentFilter
-from mainapp.forms import AddPatientForm, AddTreatmentCaseForm, AddMedicalDocumentForm, AddDocumentBodyForm
+from mainapp.forms import AddPatientForm, AddTreatmentCaseForm, AddMedicalDocumentForm, AddDocumentBodyForm, \
+    RequestTimeForm
 from mainapp.models import Patient, TreatmentCase, MedicalDocument, DocumentBody, RequestLog
 
 
@@ -45,7 +46,7 @@ def add_patient(request):
 
 
 def add_case(request):
-    # Класс для добавления случая лечения
+    # Метод для добавления случая лечения
     if request.method == 'POST':
         form = AddTreatmentCaseForm(request.POST)
         if form.is_valid():
@@ -57,7 +58,7 @@ def add_case(request):
 
 
 def add_document(request):
-    # Класс для добавления документа и тела документа
+    # Метод для добавления документа и тела документа
     if request.method == 'POST':
         document_form = AddMedicalDocumentForm(request.POST)
         body_form = AddDocumentBodyForm(request.POST)
@@ -142,7 +143,7 @@ class DocumentDetailView(ListView):
 
 def get_json_from_aiohttp_server(request):
     # Метод для сохранения логов запросов
-    req = requests.get('http://main:8080/api/posts_and_photos')
+    req = requests.get('http://127.0.0.1:8080/api/posts_and_photos')
     content = req.text
     if RequestLog.objects.last() is None:
         RequestLog.objects.create(request_filling=content)
@@ -155,6 +156,7 @@ def get_json_from_aiohttp_server(request):
     context = {'logs': RequestLog.objects.all()}
     return render(request, 'mainapp/request_to_aiohttp.html', context)
 
+
 class LogDetailView(DetailView):
     # Класс для отображения конкртеного лога
     model = RequestLog
@@ -164,3 +166,18 @@ class LogDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['logs'] = RequestLog.objects.get(pk=self.kwargs['pk'])
         return context
+
+
+def change_request_time(request):
+    # Метод для изменения периодичности запросов
+    if request.method == 'POST':
+        form = RequestTimeForm(request.POST)
+        if form.is_valid():
+            time = str(form.cleaned_data['request_time'])
+            with open('server_time', 'w') as outfile:
+                outfile.write(time)
+            return redirect('case_list_view')
+    form = RequestTimeForm()
+    context = {'form': form}
+
+    return render(request, 'mainapp/server_time.html', context)

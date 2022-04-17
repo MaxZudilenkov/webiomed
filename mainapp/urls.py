@@ -2,7 +2,7 @@ from django.urls import path
 
 from mainapp.views import PatientListView, PatientDetailView, add_patient, TreatmentCaseListView, \
     TreatmentCaseDetailView, add_case, MedicalDocumentListView, DocumentDetailView, add_document, \
-    get_json_from_aiohttp_server, LogDetailView
+    get_json_from_aiohttp_server, LogDetailView, change_request_time
 
 urlpatterns = [
     path('', PatientListView.as_view(), name="patient_list_view"),
@@ -14,6 +14,7 @@ urlpatterns = [
     path('document/<int:pk>', DocumentDetailView.as_view(), name="document_detail"),
     path('add_patient/', add_patient, name="add_patient"),
     path('add_case/', add_case, name="add_case"),
+    path('change_request_time/', change_request_time, name="change_request_time"),
     path('add_document/', add_document, name="add_document"),
     path('request_aiohttp/', get_json_from_aiohttp_server, name="get_json_from_aiohttp_server"),
 ]
