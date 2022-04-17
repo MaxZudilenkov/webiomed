@@ -13,7 +13,8 @@
     {% for log in logs %}
 
         <p>
-            {{ log }}
+
+        <a href="{% url 'log_detail'  pk=log.pk %}"> {{ log }} </a>
 
         </p>
 

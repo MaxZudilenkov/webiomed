@@ -154,3 +154,13 @@ def get_json_from_aiohttp_server(request):
         RequestLog.objects.create(request_filling=content)
     context = {'logs': RequestLog.objects.all()}
     return render(request, 'mainapp/request_to_aiohttp.html', context)
+
+class LogDetailView(DetailView):
+    # Класс для отображения конкртеного лога
+    model = RequestLog
+    template_name = 'mainapp/log_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['logs'] = RequestLog.objects.get(pk=self.kwargs['pk'])
+        return context
