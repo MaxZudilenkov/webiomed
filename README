@@ -1,8 +1,3 @@
-Для запуска приложения необходимо:
-1. Запустить файл aiohttp/main.py
-2. Запустить файл aiohttp/scrap.py
-3. Выполнить python manage.py makemigrations
-4. Выполнить python manage.py migrate
-5. Выполнить python manage.py runserver
-
+Для запуска приложения необходимо выполнить команду:
+docker-compose up
 
