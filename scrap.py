@@ -20,7 +20,7 @@ async def create_json(url, file):
 
 def server_time():
     read_file = open("server_time", "r")
-    request_time = int(read_file.read())
+    request_time = float(read_file.read())
     return request_time
 
 
